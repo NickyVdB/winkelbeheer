@@ -1,0 +1,59 @@
+<h1>Nieuw product</h1>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="naam">Naam</label>
+        <input type="text"
+               id="naam"
+               [ngModel]="product?.naam"
+               class="form-control"
+               name="naam"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="code">Code</label>
+        <input type="text"
+               id="code"
+               [ngModel]="product?.code"
+               class="form-control"
+               name="code"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="beschrijving">Beschrijving</label>
+        <input type="text"
+               id="beschrijving"
+               [ngModel]="product?.beschrijving"
+               class="form-control"
+               name="beschrijving"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="prijs">Prijs</label>
+        <input type="number"
+               pattern="[0-9]+([\.,][0-9]+)?"
+               step="0.01"
+               id="prijs"
+               [ngModel]="product?.prijs"
+               class="form-control"
+               name="prijs"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="leverancier"> Leverancier: </label><br>
+        <select id="leverancier" name="leverancier" [ngModel]="product?.leverancier" class="form-control">
+            <option *ngFor="let leverancier of leveranciers" [value]="leverancier.naam">
+                {{leverancier.naam}}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="afdeling"> Afdeling: </label><br>
+        <select id="afdeling" name="afdeling" [ngModel]="product?.afdeling" class="form-control">
+            <option *ngFor="let afdeling of afdelingen" [value]="afdeling.naam">
+                {{afdeling.naam}}
+            </option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Submit</button>
+
+</form>

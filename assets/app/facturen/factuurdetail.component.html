@@ -1,0 +1,75 @@
+<h1>Details factuur</h1>
+
+<button class="btn btn-info" (click)="openFacturen()">Selecteer factuur</button>
+<button *ngIf="selectedKlant" (click)="toPdf()" class="btn btn-info">Maak PDF</button>
+
+<br/>
+<div #pdfcontent style="background: #FFF; padding: 20px">
+    <h2>Factuur {{selectedFactuur?.factuurid}}</h2>
+    <br/>
+    <h4>Klantgegevens</h4>
+    <br/>
+    <p>Klant ID: {{selectedKlant?._id}}</p>
+    <p>Naam: {{selectedKlant?.naam}} {{selectedKlant?.voornaam}}</p>
+    <p>Telefoon: {{selectedKlant?.telefoon}}</p>
+    <p>E-mail: {{selectedKlant?.email}}</p>
+    <br/>
+    <h4>Details</h4>
+    <br/>
+    <table class="table">
+        <tr>
+            <th>Beschrijving</th>
+            <th>Prijs</th>
+        </tr>
+        <tr *ngFor="let factuuritem of factuurItemsFilter">
+            <td>{{factuuritem.beschrijving}}</td>
+            <td>€{{factuuritem.prijs}}</td>
+        </tr>
+    </table>
+    <h4>Korting</h4>
+    <p>Kortingspercentage: {{selectedKlant.kortingsprocent}} %</p>
+    <h5>- €{{korting | number : '1.2-2'}}</h5>
+    <h4>Totaal</h4>
+    <h5>€{{bedrag | number : '1.2-2'}}</h5>
+</div>
+
+
+<div bsModal #factuurModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myFactuurModal"
+     aria-hidden="true">
+    <div style="overflow-y: scroll" class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Factuur kiezen</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideFactuurModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="accordion" role="tablist" *ngFor="let factuur of facturen">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="{{factuur.factuurid}}">
+                            <h5 class="mb-0">
+                                <a data-toggle="collapse" role="button" aria-expanded="false"
+                                   [attr.aria-controls]="factuur.factuurid">
+                                    Factuurnummer: {{factuur.factuurid}}
+                                </a>
+                            </h5>
+                        </div>
+
+                        <div id="{{factuur._id}}" class="collapse show" role="tabpanel" aria-labelledby="headingOne"
+                             data-parent="#accordion">
+                            <div class="card-body">
+                                <p>Klant: {{factuur.klantnaam}}</p>
+
+                                <p>
+                                    <button class="btn btn-info" (click)="selectFactuur(factuur)">Selecteer</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

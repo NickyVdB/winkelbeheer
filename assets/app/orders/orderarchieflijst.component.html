@@ -1,0 +1,23 @@
+<h1>Archief</h1>
+<div id="accordion" role="tablist" *ngFor="let order of orders">
+    <div class="card">
+        <div class="card-header" role="tab" id="{{order.naam}}">
+            <h5 class="mb-0">
+                <a data-toggle="collapse" role="button" aria-expanded="false" [attr.aria-controls]="order.id">
+                    {{order.naam}}
+                </a>
+            </h5>
+        </div>
+
+        <div id="{{order.id}}" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <p>Datum: {{order.datum}}</p>
+                <p>Status: {{order.status}}</p>
+                <p>Totaalprijs: {{order.totaalprijs}}</p>
+                <p>Leverancier: {{order.leverancier}}</p>
+                <p>Verantwoordelijk: {{order.verantwoordelijke}}</p>
+                <p><button class="btn btn-info" (click)="onArchiveer(order)">Zet terug actief</button></p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<h4>Archief</h4>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Klant</th>
+        <th>Status</th>
+    </tr>
+    <tr *ngFor="let factuur of facturen">
+        <td>{{factuur.factuurid}}</td>
+        <td>{{factuur.klantnaam}}</td>
+        <td>{{factuur.status}}</td>
+    </tr>
+
+</table>

@@ -1,0 +1,26 @@
+<h1>Facturen</h1>
+
+<div class="row">
+    <div class="col-4">
+        <ul style="background-color: #e3f2fd;" class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['nieuw']">Nieuw factuur</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['detail']">Details van factuur</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['edit']">Huidig factuur aanpassen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['huidig']">Overzicht huidige facturen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['archief']">Archief</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-8">
+        <router-outlet></router-outlet>
+    </div>
+</div>

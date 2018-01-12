@@ -1,0 +1,99 @@
+<h1>Klantenlijst</h1>
+<br/>
+<table class="table">
+    <tr>
+        <th>Naam</th>
+        <th>Voornaam</th>
+        <th>Korting %</th>
+        <th>Telefoon</th>
+        <th>E-mail</th>
+        <th>Bewerken</th>
+        <th>Verwijderen</th>
+    </tr>
+    <tr *ngFor="let klant of klanten">
+        <td>{{klant.naam}}</td>
+        <td>{{klant.voornaam}}</td>
+        <td>{{klant.kortingsprocent}}</td>
+        <td>{{klant.telefoon}}</td>
+        <td>{{klant.email}}</td>
+        <td><a (click)="showEditModal(klant)"><i class="material-icons">edit</i></a></td>
+        <td><a (click)="onDelete(klant)"><i class="material-icons">delete</i></a></td>
+
+    </tr>
+
+    <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myEditModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Klant aanpassen</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="onEdit(ngForm)" #ngForm="ngForm" ngNativeValidate>
+                        <div class="form-group">
+                            <input type="text"
+                                   id="id"
+                                   [ngModel]="klant?.id"
+                                   class="form-control"
+                                   name="id"
+                                   hidden
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="naam">Achternaam</label>
+                            <input type="text"
+                                   id="naam"
+                                   [ngModel]="klant?.naam"
+                                   class="form-control"
+                                   name="naam"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="voornaam">Voornaam</label>
+                            <input type="text"
+                                   id="voornaam"
+                                   [ngModel]="klant?.voornaam"
+                                   class="form-control"
+                                   name="voornaam"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="korting">Kortingsprocent</label>
+                            <input type="number"
+                                   id="korting"
+                                   [ngModel]="klant?.kortingsprocent"
+                                   class="form-control"
+                                   name="korting"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefoon">Telefoon</label>
+                            <input type="tel"
+                                   id="telefoon"
+                                   [ngModel]="klant?.telefoon"
+                                   class="form-control"
+                                   name="telefoon"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email"
+                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                                   id="email"
+                                   [ngModel]="klant?.email"
+                                   class="form-control"
+                                   name="email"
+                                   required>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success">Submit</button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</table>

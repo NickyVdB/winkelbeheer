@@ -1,0 +1,17 @@
+<h4>Huidige facturen</h4>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Klant</th>
+        <th>Status</th>
+        <th>Archiveer</th>
+    </tr>
+    <tr *ngFor="let factuur of facturen">
+        <td>{{factuur.factuurid}}</td>
+        <td>{{factuur.klantnaam}}</td>
+        <td>{{factuur.status}}</td>
+        <td><a (click)="onArchiveer(factuur)"><i class="material-icons">archive</i></a></td>
+    </tr>
+
+</table>

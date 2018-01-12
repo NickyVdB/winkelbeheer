@@ -1,0 +1,130 @@
+<h1>Productoverzicht</h1>
+<form (ngSubmit)="filterOnLeverancier(ngFLeverancier)" #ngFLeverancier="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="leverancierFilter"> Leverancier: </label><br>
+        <select id="leverancierFilter" name="leverancierFilter" [ngModel]="product?.leverancier" class="form-control">
+            <option *ngFor="let leverancier of leveranciers" [value]="leverancier.naam">
+                {{leverancier.naam}}
+            </option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Filter</button>
+</form>
+<form (ngSubmit)="filterOnAfdeling(ngFAfdeling)" #ngFAfdeling="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="afdelingFilter"> Afdeling: </label><br>
+        <select id="afdelingFilter" name="afdelingFilter" [ngModel]="product?.afdeling" class="form-control">
+            <option *ngFor="let afdeling of afdelingen" [value]="afdeling.naam">
+                {{afdeling.naam}}
+            </option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Filter</button>
+</form>
+<br/>
+<div id="accordion" role="tablist" *ngFor="let product of producten">
+    <div class="card">
+        <div class="card-header" role="tab" id="{{product.naam}}">
+            <h5 class="mb-0">
+                <a data-toggle="collapse" role="button" aria-expanded="false" [attr.aria-controls]="product.id">
+                    {{product.naam}}
+                </a>
+            </h5>
+        </div>
+
+        <div id="{{product.id}}" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                <p>Code: {{product.code}}</p>
+                <p>Beschrijving: {{product.beschrijving}}</p>
+                <p>Prijs: {{product.prijs}}</p>
+                <p>Leverancier: {{product.leverancier}}</p>
+                <p>Afdeling: {{product.afdeling}}</p>
+                <p><button class="btn btn-danger" (click)="onDelete(product)">Verwijderen</button></p>
+                <p><button class="btn btn-warning" (click)="showEditModal(product)">Bewerken</button></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myEditModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Product aanpassen</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="onEdit(ngForm)" #ngForm="ngForm" ngNativeValidate>
+                    <div class="form-group">
+                        <input type="text"
+                               id="id"
+                               [ngModel]="product?.id"
+                               class="form-control"
+                               name="id"
+                               hidden
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="naam">Naam</label>
+                        <input type="text"
+                               id="naam"
+                               [ngModel]="product?.naam"
+                               class="form-control"
+                               name="naam"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="code">Code</label>
+                        <input type="text"
+                               id="code"
+                               [ngModel]="product?.code"
+                               class="form-control"
+                               name="code"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="beschrijving">Beschrijving</label>
+                        <input type="text"
+                               id="beschrijving"
+                               [ngModel]="product?.beschrijving"
+                               class="form-control"
+                               name="beschrijving"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prijs">Prijs</label>
+                        <input type="number"
+                               pattern="[0-9]+([\.,][0-9]+)?"
+                               step="0.01"
+                               id="prijs"
+                               [ngModel]="product?.prijs"
+                               class="form-control"
+                               name="prijs"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="leverancier"> Leverancier: </label><br>
+                        <select id="leverancier" name="leverancier" [ngModel]="product?.leverancier" class="form-control">
+                            <option *ngFor="let leverancier of leveranciers" [value]="leverancier.naam">
+                                {{leverancier.naam}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="afdeling"> Afdeling: </label><br>
+                        <select id="afdeling" name="afdeling" [ngModel]="product?.afdeling" class="form-control">
+                            <option *ngFor="let afdeling of afdelingen" [value]="afdeling.naam">
+                                {{afdeling.naam}}
+                            </option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success">Submit</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

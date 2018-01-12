@@ -1,0 +1,17 @@
+<h1>Promoties</h1>
+
+<div class="row">
+    <div class="col-4">
+        <ul style="background-color: #e3f2fd;" class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['nieuw']">Nieuwe promotie</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['lijst']">Alle promoties</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-8">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<h1>Orders</h1>
+
+<div class="row">
+    <div class="col-4">
+        <ul style="background-color: #e3f2fd;" class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['nieuw']">Nieuwe order</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['huidig']">Overzicht huidige orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['archief']">Archief</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-8">
+        <router-outlet></router-outlet>
+    </div>
+</div>

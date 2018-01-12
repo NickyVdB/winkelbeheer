@@ -1,0 +1,137 @@
+<h1>Orderlijst</h1>
+<form (ngSubmit)="filterOnLeverancier(ngFLeverancier)" #ngFLeverancier="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="leverancierFilter"> Leverancier: </label><br>
+        <select id="leverancierFilter" name="leverancierFilter" [ngModel]="order?.leverancier" class="form-control">
+            <option *ngFor="let leverancier of leveranciers" [value]="leverancier.naam">
+                {{leverancier.naam}}
+            </option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Filter</button>
+</form>
+<form (ngSubmit)="filterOnVerantwoordelijke(ngFVerantwoordelijke)" #ngFVerantwoordelijke="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="verantwoordelijkeFilter"> Verantwoordelijke: </label><br>
+        <select id="verantwoordelijkeFilter" name="verantwoordelijkeFilter" [ngModel]="order?.verantwoordelijke"
+                class="form-control">
+            <option *ngFor="let verantwoordelijk of verantwoordelijke"
+                    [value]="verantwoordelijk.naam + ' ' + verantwoordelijk.voornaam">
+                {{verantwoordelijk.naam}} {{verantwoordelijk.voornaam}}
+            </option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Filter</button>
+</form>
+<br/>
+<div id="accordion" role="tablist" *ngFor="let order of orders">
+    <div class="card">
+        <div class="card-header" role="tab" id="{{order.naam}}">
+            <h5 class="mb-0">
+                <a data-toggle="collapse" role="button" aria-expanded="false" [attr.aria-controls]="order.id">
+                    {{order.naam}}
+                </a>
+            </h5>
+        </div>
+
+        <div id="{{order.id}}" class="collapse show" role="tabpanel" aria-labelledby="headingOne"
+             data-parent="#accordion">
+            <div class="card-body">
+                <p>Datum: {{order.datum}}</p>
+                <p>Status: {{order.status}}</p>
+                <p>Totaalprijs: {{order.totaalprijs}}</p>
+                <p>Leverancier: {{order.leverancier}}</p>
+                <p>Verantwoordelijk: {{order.verantwoordelijke}}</p>
+                <p>
+                    <button class="btn btn-info" (click)="onArchiveer(order)">Archiveer</button>
+                </p>
+                <p>
+                    <button class="btn btn-warning" (click)="showEditModal(order)">Bewerken</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myEditModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Order aanpassen</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="onEdit(ngForm)" #ngForm="ngForm" ngNativeValidate>
+                    <div class="form-group">
+                        <input type="text"
+                               id="id"
+                               [ngModel]="order?.id"
+                               class="form-control"
+                               name="id"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="naam">Naam</label>
+                        <input type="text"
+                               id="naam"
+                               [ngModel]="order?.naam"
+                               class="form-control"
+                               name="naam"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="datum">Datum</label>
+                        <input type="date"
+                               id="datum"
+                               [ngModel]="order?.datum"
+                               class="form-control"
+                               name="datum"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status"> Status: </label><br>
+                        <select id="status" name="status" [ngModel]="order?.status" class="form-control" required>
+                            <option value="Geleverd">Geleverd</option>
+                            <option value="Niet geleverd">Niet geleverd</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="totaalprijs">Totaalprijs</label>
+                        <input type="number"
+                               id="totaalprijs"
+                               pattern="[0-9]+([\.,][0-9]+)?"
+                               step="0.01"
+                               [ngModel]="order?.totaalprijs"
+                               class="form-control"
+                               name="totaalprijs"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="leverancier"> Leverancier: </label><br>
+                        <select id="leverancier" name="leverancier" [ngModel]="order?.leverancier" class="form-control">
+                            <option *ngFor="let leverancier of leveranciers" [value]="leverancier.naam">
+                                {{leverancier.naam}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="verantwoordelijke"> Verantwoordelijke: </label><br>
+                        <select id="verantwoordelijke" name="verantwoordelijke" [ngModel]="order?.verantwoordelijke"
+                                class="form-control">
+                            <option *ngFor="let verantwoordelijk of verantwoordelijke"
+                                    [value]="verantwoordelijk.naam + ' ' + verantwoordelijk.voornaam">
+                                {{verantwoordelijk.naam}} {{verantwoordelijk.voornaam}}
+                            </option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success">Submit</button>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<h1>Nieuwe klant</h1>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="naam">Achternaam</label>
+        <input type="text"
+               id="naam"
+               [ngModel]="klant?.naam"
+               class="form-control"
+               name="naam"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="voornaam">Voornaam</label>
+        <input type="text"
+               id="voornaam"
+               [ngModel]="klant?.voornaam"
+               class="form-control"
+               name="voornaam"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="kortingsprocent">Kortingspercentage</label>
+        <input type="number"
+               id="kortingsprocent"
+               [ngModel]="klant?.kortingsprocent"
+               class="form-control"
+               name="kortingsprocent"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="telefoon">Telefoon</label>
+        <input type="tel"
+               id="telefoon"
+               [ngModel]="klant?.telefoon"
+               class="form-control"
+               name="telefoon"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+               id="email"
+               [ngModel]="klant?.email"
+               class="form-control"
+               name="email"
+               required>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Submit</button>
+
+</form>

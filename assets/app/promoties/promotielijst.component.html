@@ -1,0 +1,118 @@
+<h1>Promotielijst</h1>
+<form (ngSubmit)="filterOnAfdeling(ngFAfdeling)" #ngFAfdeling="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="afdelingFilter"> Afdeling: </label><br>
+        <select id="afdelingFilter" name="afdelingFilter" [ngModel]="promotie?.afdeling" class="form-control">
+            <option *ngFor="let afdeling of afdelingen" [value]="afdeling.naam">
+                {{afdeling.naam}}
+            </option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Filter</button>
+</form>
+<br/>
+<table class="table">
+    <tr>
+        <th>Naam</th>
+        <th>Beschrijving</th>
+        <th>Afdeling</th>
+        <th>Kortings %</th>
+        <th>Begindatum</th>
+        <th>Einddatum</th>
+        <th>Bewerken</th>
+        <th>Verwijderen</th>
+    </tr>
+    <tr *ngFor="let promotie of promoties">
+        <td>{{promotie.naam}}</td>
+        <td>{{promotie.beschrijving}}</td>
+        <td>{{promotie.afdeling}}</td>
+        <td>{{promotie.kortingsprocent}}</td>
+        <td>{{promotie.begindatum}}</td>
+        <td>{{promotie.einddatum}}</td>
+        <td><a (click)="showEditModal(promotie)"><i class="material-icons">edit</i></a></td>
+        <td><a (click)="onDelete(promotie)"><i class="material-icons">delete</i></a></td>
+
+    </tr>
+
+    <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myEditModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Promotie aanpassen</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="onEdit(ngForm)" #ngForm="ngForm" ngNativeValidate>
+                        <div class="form-group">
+                            <input type="text"
+                                   id="id"
+                                   [ngModel]="promotie?.id"
+                                   class="form-control"
+                                   name="id"
+                                   hidden
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="naam">Naam</label>
+                            <input type="text"
+                                   id="naam"
+                                   [ngModel]="promotie?.naam"
+                                   class="form-control"
+                                   name="naam"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="beschrijving">Beschrijving</label>
+                            <input type="text"
+                                   id="beschrijving"
+                                   [ngModel]="promotie?.beschrijving"
+                                   class="form-control"
+                                   name="beschrijving"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="kortingsprocent">Kortings %</label>
+                            <input type="number"
+                                   id="kortingsprocent"
+                                   [ngModel]="promotie?.kortingsprocent"
+                                   class="form-control"
+                                   name="kortingsprocent"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="begindatum">Begindatum</label>
+                            <input type="date"
+                                   id="begindatum"
+                                   [ngModel]="promotie?.begindatum"
+                                   class="form-control"
+                                   name="begindatum"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="einddatum">Einddatum</label>
+                            <input type="date"
+                                   id="einddatum"
+                                   [ngModel]="promotie?.einddatum"
+                                   class="form-control"
+                                   name="einddatum"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="afdeling"> Afdeling: </label><br>
+                            <select id="afdeling" name="afdeling" [ngModel]="promotie?.afdeling" class="form-control">
+                                <option *ngFor="let afdeling of afdelingen" [value]="afdeling.naam">
+                                    {{afdeling.naam}}
+                                </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success">Submit</button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</table>

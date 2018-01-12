@@ -1,0 +1,48 @@
+<h1>Nieuwe leverancier</h1>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="naam">Naam</label>
+        <input type="text"
+               id="naam"
+               [ngModel]="leverancier?.naam"
+               class="form-control"
+               name="naam"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="telefoon">Telefoon</label>
+        <input type="text"
+               id="telefoon"
+               [ngModel]="leverancier?.telefoon"
+               class="form-control"
+               name="telefoon"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="locatie">Locatie</label>
+        <input type="text"
+               id="locatie"
+               [ngModel]="leverancier?.locatie"
+               class="form-control"
+               name="locatie"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="rekeningnr">Rekeningnummer</label>
+        <input type="text"
+               id="rekeningnr"
+               [ngModel]="leverancier?.rekeningnr"
+               class="form-control"
+               name="rekeningnr"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="status"> Status: </label><br>
+        <select id="status" name="status" [ngModel]="leverancier?.status" class="form-control" required>
+            <option value="Actief">Actief</option>
+            <option value="Non-actief">Non-actief</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Submit</button>
+
+</form>

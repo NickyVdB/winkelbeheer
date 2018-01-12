@@ -1,0 +1,90 @@
+<h1>Afdelingenlijst</h1>
+<form (ngSubmit)="filterOnVerantwoordelijke(ngFVerantwoordelijk)" #ngFVerantwoordelijk="ngForm" ngNativeValidate>
+    <div class="form-group">
+        <label for="verantwoordelijk"> Verantwoordelijke: </label><br>
+        <select id="verantwoordelijk" name="verantwoordelijk"
+                [ngModel]="afdeling?.verantwoordelijke" class="form-control">
+            <option *ngFor="let werknemer of werknemers"
+                    [value]="werknemer.voornaam + ' ' + werknemer.naam">
+                {{werknemer.voornaam}} {{werknemer.naam}}
+            </option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-outline-success">Filter</button>
+</form>
+<br/>
+<table class="table">
+    <tr>
+        <th>Naam</th>
+        <th>Beschrijving</th>
+        <th>Verantwoordelijke</th>
+        <th>Bewerken</th>
+        <th>Verwijderen</th>
+    </tr>
+    <tr *ngFor="let afdeling of afdelingen">
+        <td>{{afdeling.naam}}</td>
+        <td>{{afdeling.beschrijving}}</td>
+        <td>{{afdeling.verantwoordelijke}}</td>
+        <td><a (click)="showEditModal(afdeling)"><i class="material-icons">edit</i></a></td>
+        <td><a (click)="onDelete(afdeling)"><i class="material-icons">delete</i></a></td>
+
+    </tr>
+
+    <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myEditModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Afdeling aanpassen</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="onEdit(ngForm)" #ngForm="ngForm" ngNativeValidate>
+                        <div class="form-group">
+                            <input type="text"
+                                   id="id"
+                                   [ngModel]="afdeling?.id"
+                                   class="form-control"
+                                   name="id"
+                                   hidden
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="naam">Naam</label>
+                            <input type="text"
+                                   id="naam"
+                                   [ngModel]="afdeling?.naam"
+                                   class="form-control"
+                                   name="naam"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="beschrijving">Beschrijving</label>
+                            <input type="text"
+                                   id="beschrijving"
+                                   [ngModel]="afdeling?.beschrijving"
+                                   class="form-control"
+                                   name="beschrijving"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="verantwoordelijke">Verantwoordelijke</label>
+                            <select id="verantwoordelijke" name="verantwoordelijke"
+                                    [ngModel]="afdeling?.verantwoordelijke" class="form-control">
+                                <option *ngFor="let werknemer of werknemers"
+                                        [value]="werknemer.voornaam + ' ' + werknemer.naam">
+                                    {{werknemer.voornaam}} {{werknemer.naam}}
+                                </option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success">Submit</button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</table>

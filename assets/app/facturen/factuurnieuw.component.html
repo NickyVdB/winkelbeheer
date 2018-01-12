@@ -1,0 +1,213 @@
+<div>
+    <h4>Klantgegevens</h4>
+    <button class="btn btn-info" (click)="openKlanten()">Selecteer klant</button>
+    <form #f="ngForm" ngNativeValidate>
+        <div class="form-row">
+            <div class="col">
+                <label for="naam">Naam</label>
+                <input type="text"
+                       id="naam"
+                       [ngModel]="selectedklant?.naam"
+                       class="form-control"
+                       name="naam"
+                       required disabled>
+            </div>
+            <div class="col">
+                <label for="voornaam">Voornaam</label>
+                <input type="text"
+                       id="voornaam"
+                       [ngModel]="selectedklant?.voornaam"
+                       class="form-control"
+                       name="voornaam"
+                       required disabled>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col">
+                <label for="kortingsprocent">Kortingspercentage</label>
+                <input type="text"
+                       id="kortingsprocent"
+                       [ngModel]="selectedklant?.kortingsprocent"
+                       class="form-control"
+                       name="kortingsprocent"
+                       required disabled>
+            </div>
+            <div class="col">
+                <label for="telefoon">Telefoon</label>
+                <input type="text"
+                       id="telefoon"
+                       [ngModel]="selectedklant?.telefoon"
+                       class="form-control"
+                       name="telefoon"
+                       required disabled>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <label for="email">E-mail</label>
+                <input type="text"
+                       id="email"
+                       [ngModel]="selectedklant?.email"
+                       class="form-control"
+                       name="email"
+                       required disabled>
+            </div>
+            <div class="col">
+                <input type="text"
+                       id="klantid"
+                       [ngModel]="selectedklant?.id"
+                       class="form-control"
+                       name="klantid"
+                       required hidden>
+            </div>
+        </div>
+    </form>
+    <br/>
+    <h4>Details</h4>
+    <form #f="ngForm" ngNativeValidate>
+        <div class="form-row">
+            <div class="col">
+                <label for="beschrijving">Beschrijving</label>
+                <input type="text"
+                       id="beschrijving"
+                       [ngModel]="factuurItem?.beschrijving"
+                       class="form-control"
+                       name="beschrijving"
+                       required>
+            </div>
+            <div class="col">
+                <label for="prijs">Prijs</label>
+                <input type="number"
+                       id="prijs"
+                       pattern="[0-9]+([\.,][0-9]+)?"
+                       step="0.01"
+                       [ngModel]="factuurItem?.prijs"
+                       class="form-control"
+                       name="prijs"
+                       required>
+            </div>
+            <div class="col">
+                <label>Opslaan</label><br>
+                <a (click)="saveProduct(f)"><i class="material-icons">check</i></a>
+            </div>
+        </div>
+    </form>
+    <br/>
+    <table class="table">
+        <tr>
+            <th>Beschrijving</th>
+            <th>Prijs</th>
+            <th>Bewerken</th>
+            <th>Verwijderen</th>
+        </tr>
+        <tr *ngFor="let factuuritem of factuurItemsFilter">
+            <td>{{factuuritem.beschrijving}}</td>
+            <td>{{factuuritem.prijs}}</td>
+            <td><a (click)="showEditModal(factuuritem)"><i class="material-icons">edit</i></a></td>
+            <td><a (click)="onDelete(factuuritem)"><i class="material-icons">delete</i></a></td>
+
+        </tr>
+    </table>
+</div>
+
+<div bsModal #klantenModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myKlantenModal"
+     aria-hidden="true">
+    <div style="overflow-y: scroll" class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Klant kiezen</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideKlantModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="accordion" role="tablist" *ngFor="let klant of klanten">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="{{klant.naam}}">
+                            <h5 class="mb-0">
+                                <a data-toggle="collapse" role="button" aria-expanded="false"
+                                   [attr.aria-controls]="klant.id">
+                                    {{klant.naam}} {{klant.voornaam}}
+                                </a>
+                            </h5>
+                        </div>
+
+                        <div id="{{klant.id}}" class="collapse show" role="tabpanel" aria-labelledby="headingOne"
+                             data-parent="#accordion">
+                            <div class="card-body">
+                                <p>Korting: {{klant.kortingsprocent}}%</p>
+                                <p>Telefoon: {{klant.telefoon}}</p>
+                                <p>E-mail: {{klant.email}}</p>
+                                <p>
+                                    <button class="btn btn-info" (click)="selectKlant(klant)">Selecteer</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myEditModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Product aanpassen</h4>
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="updateProduct(ngForm)" #ngForm="ngForm" ngNativeValidate>
+                    <div class="form-group">
+                        <input type="text"
+                               id="id"
+                               [ngModel]="factuurItem?.id"
+                               class="form-control"
+                               name="id"
+                               hidden
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text"
+                               id="factuurid"
+                               [ngModel]="factuurItem?.factuurid"
+                               class="form-control"
+                               name="factuurid"
+                               hidden
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="beschrijvingItem">Beschrijving</label>
+                        <input type="text"
+                               id="beschrijvingItem"
+                               [ngModel]="factuurItem?.beschrijving"
+                               class="form-control"
+                               name="beschrijvingItem"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prijsItem">Prijs</label>
+                        <input type="number"
+                               pattern="[0-9]+([\.,][0-9]+)?"
+                               step="0.01"
+                               id="prijsItem"
+                               [ngModel]="factuurItem?.prijs"
+                               class="form-control"
+                               name="prijsItem"
+                               required>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success">Submit</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-success" (click)="saveFactuur(f)">Opslaan</button>

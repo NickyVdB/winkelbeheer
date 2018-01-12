@@ -1,0 +1,75 @@
+<h1>Werknemerlijst</h1>
+
+<table class="table">
+    <tr>
+        <th>Naam</th>
+        <th>Voornaam</th>
+        <th>Telefoon</th>
+        <th>Bewerken</th>
+        <th>Verwijderen</th>
+    </tr>
+    <tr *ngFor="let werknemer of werknemers">
+        <td>{{werknemer.naam}}</td>
+        <td>{{werknemer.voornaam}}</td>
+        <td>{{werknemer.telefoon}}</td>
+        <td><a (click)="showEditModal(werknemer)"><i class="material-icons">edit</i></a></td>
+        <td><a (click)="onDelete(werknemer)"><i class="material-icons">delete</i></a></td>
+
+    </tr>
+
+    <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myEditModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Werknemer aanpassen</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="hideEditModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="onEdit(ngForm)" #ngForm="ngForm" ngNativeValidate>
+                        <div class="form-group">
+                            <input type="text"
+                                   id="id"
+                                   [ngModel]="werknemer?.id"
+                                   class="form-control"
+                                   name="id"
+                                   hidden
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="naam">Achternaam</label>
+                            <input type="text"
+                                   id="naam"
+                                   [ngModel]="werknemer?.naam"
+                                   class="form-control"
+                                   name="naam"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="voornaam">Voornaam</label>
+                            <input type="text"
+                                   id="voornaam"
+                                   [ngModel]="werknemer?.voornaam"
+                                   class="form-control"
+                                   name="voornaam"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefoon">Telefoon</label>
+                            <input type="tel"
+                                   id="telefoon"
+                                   [ngModel]="werknemer?.telefoon"
+                                   class="form-control"
+                                   name="telefoon"
+                                   required>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success">Submit</button>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</table>
